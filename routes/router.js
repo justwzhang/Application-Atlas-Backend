@@ -3,7 +3,11 @@ const express = require('express')
 const Top5ListController = require('../controllers/top5list-controller')
 const CommunityListController = require('../controllers/communityList-controller')
 const UserController = require('../controllers/user-controller')
+const CollectionControler = require('../controllers/collection-controler')
 const router = express.Router()
+
+router.post('/collection', auth.verify, CollectionControler.createCollection)
+router.delete('/collection/:id', auth.verify, CollectionControler.deleteCollection)
 
 router.post('/top5list', auth.verify, Top5ListController.createTop5List)
 router.put('/top5list/:id', auth.verify, Top5ListController.updateTop5List)
