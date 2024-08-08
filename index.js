@@ -19,12 +19,11 @@ app.use(express.json())
 app.use(cookieParser())
 
 // SETUP OUR OWN ROUTERS AS MIDDLEWARE
-const top5listsRouter = require('./routes/top5lists-router')
-app.use('/api', top5listsRouter)
+const Router = require('./routes/router')
+app.use('/api', Router)
 
 // INITIALIZE OUR DATABASE OBJECT
 const db = require('./db')
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 db();
 
 // PUT THE SERVER IN LISTENING MODE
