@@ -47,8 +47,47 @@ deleteCollection = async (req, res) =>{
     });
 }
 
+/**
+ * Gets all the collections for a given user
+ */
+getCollections = async (req, res) => {
+    await Collection.find({},(err, Collections)=>{
+        Collections = Collections.filter(col =>{return col.owner == req.params.user});
+        return res.status(200).json({ success: true, data: Collections })
+    })
+}
+
+/**
+ * Updates the collection by id
+ */
+updateCollection = async (req, res) => {
+    const body = req.body;
+    if (!body.collectionName) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        })
+    }
+
+    Collection.findOne({_id:req.params.id},(err, collection)=>{
+        if(err) 
+            return res.status(404).json({
+                err,
+                message: 'collection not found',
+            })
+        collection.collectionName = body.collectionName;
+        collection.save()
+        .then(()=>{
+            return res.status(200).json({
+                success:true
+            })
+        }).catch(err=>{console.log(err)})
+    })
+}
+
 module.exports = {
     createCollection,
-    deleteCollection
-
+    deleteCollection,
+    getCollections,
+    updateCollection
 }

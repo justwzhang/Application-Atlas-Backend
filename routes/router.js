@@ -8,6 +8,8 @@ const router = express.Router()
 
 router.post('/collection', auth.verify, CollectionControler.createCollection)
 router.delete('/collection/:id', auth.verify, CollectionControler.deleteCollection)
+router.get('/collection/:user', auth.verify, CollectionControler.getCollections)
+router.put('/collection/:id', auth.verify, CollectionControler.updateCollection)
 
 router.post('/top5list', auth.verify, Top5ListController.createTop5List)
 router.put('/top5list/:id', auth.verify, Top5ListController.updateTop5List)
